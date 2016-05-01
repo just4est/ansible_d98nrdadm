@@ -1,0 +1,25 @@
+# file: roles/install-postgresql-on-el6/tasks/install.yml -- install postgresql packages
+# OS Preconfiguraion 0.98
+# - name: "Stage 1: sysctl, net., file-max., 
+
+
+- name: "Stage 1: install repository package"
+  yum:
+    state: present
+    pkg: "{{ item.repo }}"
+  when: item.version == "{{ postgresql_version }}"
+  with_items: postgresql_repo_RedHat
+
+- name: "Stage 1: install postgresql packages"
+  yum: 
+    state: latest
+    pkg: "{{ item }}"
+  with_items:
+    - postgresql{{ postgresql_version |replace('.', '') }}-server
+    - python-psycopg2
+
+- name: "Stage 1: install postgresql contrib package"
+  yum: 
+    state: latest
+    pkg: postgresql{{ postgresql_version |replace('.', '') }}-contrib
+  when: postgresql_contrib

@@ -1,0 +1,8 @@
+---
+# Install PostgreSQL on Enterprise Linux 6 (RHEL/CentOS/Scientific)
+- hosts: d00nrddb01
+  vars_files:
+   - 'defaults/main.yml'
+   - 'vars/repo.yml'
+  tasks:
+   - include: 'tasks/main.yml'
